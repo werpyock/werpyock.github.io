@@ -1,1 +1,83 @@
-nothing here
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub File Viewer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #file-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        #file-list li {
+            cursor: pointer;
+            margin: 5px 0;
+            color: blue;
+        }
+        #file-content {
+            margin-top: 20px;
+            white-space: pre-wrap;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+
+<h1>GitHub File Viewer</h1>
+<input type="text" id="repo" placeholder="Enter GitHub repo (user/repo)">
+<button id="load">Load Files</button>
+
+<h2>Files:</h2>
+<ul id="file-list"></ul>
+
+<h2>File Content:</h2>
+<div id="file-content"></div>
+
+<script>
+    document.getElementById('load').addEventListener('click', function() {
+        const repo = document.getElementById('repo').value;
+        if (repo) {
+            fetch(`https://api.github.com/repos/${repo}/contents`)
+                .then(response => response.json())
+                .then(data => {
+                    const fileList = document.getElementById('file-list');
+                    fileList.innerHTML = ''; // Clear previous list
+                    data.forEach(file => {
+                        const li = document.createElement('li');
+                        li.textContent = file.name;
+                        li.onclick = () => loadFile(repo, file.path);
+                        fileList.appendChild(li);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching repository contents:', error);
+                });
+        } else {
+            alert('Please enter a valid GitHub repository (user/repo)');
+        }
+    });
+
+    function loadFile(repo, path) {
+        fetch(`https://api.github.com/repos/${repo}/contents/${path}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.content) {
+                    const content = atob(data.content); // Decode base64 content
+                    document.getElementById('file-content').textContent = content;
+                } else {
+                    document.getElementById('file-content').textContent = 'File not found or not accessible.';
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching file content:', error);
+            });
+    }
+</script>
+
+</body>
+</html>
