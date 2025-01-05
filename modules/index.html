@@ -42,7 +42,12 @@
         const repo = 'werpyock/werpyock.github.io';
         const path = 'modules';
         fetch(`https://api.github.com/repos/${repo}/contents/${path}`)
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(data => {
                 const fileList = document.getElementById('file-list');
                 fileList.innerHTML = ''; // Clear previous list
@@ -55,12 +60,18 @@
             })
             .catch(error => {
                 console.error('Error fetching repository contents:', error);
+                document.getElementById('file-content').textContent = 'Error loading files. Please check the console for details.';
             });
     });
 
     function loadFile(repo, path) {
         fetch(`https://api.github.com/repos/${repo}/contents/${path}`)
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(data => {
                 if (data.content) {
                     const content = atob(data.content); // Decode base64 content
@@ -71,6 +82,7 @@
             })
             .catch(error => {
                 console.error('Error fetching file content:', error);
+                document.getElementById('file-content').textContent = 'Error loading file content. Please check the console for details.';
             });
     }
 </script>
