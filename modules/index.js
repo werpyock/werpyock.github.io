@@ -8,9 +8,9 @@ const repo = 'werpyock/werpyock.github.io', path = 'modules';
             .then(data => {
                 const fileList = document.getElementById('file-list');
                 fileList.innerHTML = data.map(file => `
-                    <li>${file.name}<span class="file-actions">
-                    <button onclick="window.open('${file.download_url}', '_blank')">| Посмотреть на GitHub</button>
-                    <button onclick="loadFile('${file.path}')">| Посмотреть на сайте</button></span></li>
+                    <li>${file.name} | <span class="file-actions">
+                    | <button onclick="window.open('${file.download_url}', '_blank')">Посмотреть на GitHub</button>
+                    | <button onclick="loadFile('${file.path}')">Посмотреть на сайте</button></span></li>
                 `).join('');
             })
             .catch(error => {
