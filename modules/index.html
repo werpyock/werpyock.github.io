@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitHub File Viewer</title>
+    <title>GitHub File Viewer - werpyock.github.io</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -28,11 +28,10 @@
 </head>
 <body>
 
-<h1>GitHub File Viewer</h1>
-<input type="text" id="repo" placeholder="Enter GitHub repo (user/repo)">
-<button id="load">Load Files</button>
+<h1>GitHub File Viewer - werpyock.github.io</h1>
+<button id="load">Load Modules</button>
 
-<h2>Files:</h2>
+<h2>Files in Modules:</h2>
 <ul id="file-list"></ul>
 
 <h2>File Content:</h2>
@@ -40,26 +39,23 @@
 
 <script>
     document.getElementById('load').addEventListener('click', function() {
-        const repo = document.getElementById('repo').value;
-        if (repo) {
-            fetch(`https://api.github.com/repos/${repo}/contents`)
-                .then(response => response.json())
-                .then(data => {
-                    const fileList = document.getElementById('file-list');
-                    fileList.innerHTML = ''; // Clear previous list
-                    data.forEach(file => {
-                        const li = document.createElement('li');
-                        li.textContent = file.name;
-                        li.onclick = () => loadFile(repo, file.path);
-                        fileList.appendChild(li);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error fetching repository contents:', error);
+        const repo = 'werpyock/werpyock.github.io';
+        const path = 'modules';
+        fetch(`https://api.github.com/repos/${repo}/contents/${path}`)
+            .then(response => response.json())
+            .then(data => {
+                const fileList = document.getElementById('file-list');
+                fileList.innerHTML = ''; // Clear previous list
+                data.forEach(file => {
+                    const li = document.createElement('li');
+                    li.textContent = file.name;
+                    li.onclick = () => loadFile(repo, file.path);
+                    fileList.appendChild(li);
                 });
-        } else {
-            alert('Please enter a valid GitHub repository (user/repo)');
-        }
+            })
+            .catch(error => {
+                console.error('Error fetching repository contents:', error);
+            });
     });
 
     function loadFile(repo, path) {
