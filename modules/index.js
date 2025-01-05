@@ -4,13 +4,13 @@ const repo = 'werpyock/werpyock.github.io', path = 'modules';
 
     function loadModules() {
         fetch(`https://api.github.com/repos/${repo}/contents/${path}`)
-            .then(response => { if (!response.ok) throw new Error('Network response was not ok'); return response.json(); })
+            .then(response => { if (!response.ok) throw new Error('Network error'); return response.json(); })
             .then(data => {
                 const fileList = document.getElementById('file-list');
                 fileList.innerHTML = data.map(file => `
                     <li>${file.name}<span class="file-actions">
-                    <button onclick="window.open('${file.download_url}', '_blank')">Redirect</button>
-                    <button onclick="loadFile('${file.path}')">View in Place</button></span></li>
+                    <button onclick="window.open('${file.download_url}', '_blank')">| Redirect</button>
+                    <button onclick="loadFile('${file.path}')">| View in Place</button></span></li>
                 `).join('');
             })
             .catch(error => {
