@@ -4,29 +4,29 @@ const repo = 'werpyock/werpyock.github.io', path = 'modules';
 
     function loadModules() {
         fetch(`https://api.github.com/repos/${repo}/contents/${path}`)
-            .then(response => { if (!response.ok) throw new Error('Network error'); return response.json(); })
+            .then(response => { if (!response.ok) throw new Error('Ошибка сети'); return response.json(); })
             .then(data => {
                 const fileList = document.getElementById('file-list');
                 fileList.innerHTML = data.map(file => `
                     <li>${file.name}<span class="file-actions">
-                    <button onclick="window.open('${file.download_url}', '_blank')">| Redirect</button>
-                    <button onclick="loadFile('${file.path}')">| View in Place</button></span></li>
+                    <button onclick="window.open('${file.download_url}', '_blank')">| Посмотреть на GitHub</button>
+                    <button onclick="loadFile('${file.path}')">| Посмотреть на сайте</button></span></li>
                 `).join('');
             })
             .catch(error => {
-                console.error('Error fetching repository contents:', error);
-                document.getElementById('file-content').textContent = 'Error loading files. Please check the console for details.';
+                console.error('Ошибка фетча репозитория:', error);
+                document.getElementById('file-content').textContent = 'Ошибка фетча файлов репозитория.';
             });
     }
 
     function loadFile(filePath) {
         fetch(`https://api.github.com/repos/${repo}/contents/${filePath}`)
-            .then(response => { if (!response.ok) throw new Error('Network response was not ok'); return response.json(); })
+            .then(response => { if (!response.ok) throw new Error('Ошибка сети'); return response.json(); })
             .then(data => {
-                document.getElementById('file-content').textContent = data.content ? atob(data.content) : 'File not found or not accessible.';
+                document.getElementById('file-content').textContent = data.content ? atob(data.content) : 'Файл удален или он недоступен.';
             })
             .catch(error => {
-                console.error('Error fetching file content:', error);
-                document.getElementById('file-content').textContent = 'Error loading file content. Please check the console for details.';
+                console.error('Ошибка фетча:', error);
+                document.getElementById('file-content').textContent = 'Ошибка загрузки контента файла!';
             });
     }
