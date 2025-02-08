@@ -1,73 +1,75 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>werpyock bio</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            max-width: 400px;
-            width: 100%;
-        }
-        .video-container {
-            position: relative;
-            width: 640px;
-            height: 360px;
-            background-color: black;
-            cursor: pointer;
-        }
-        .video-container video {
-            width: 100%;
-            height: 100%;
-        }
-        .play-button {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-        h1 {
-            margin: 0;
-            font-size: 24px;
-        }
-        p {
-            color: #666;
-            margin: 10px 0;
-        }
-        .links a {
-            display: block;
-            color: #1a0dab;
-            text-decoration: none;
-            margin: 5px 0;
-        }
-        .links a:hover {
-            text-decoration: underline;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>werpyock Bio</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+    }
+    .pfp {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 0 auto 20px;
+    }
+    .pfp video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      outline: none;
+    }
+    h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+    p {
+      color: #666;
+      margin: 10px 0;
+    }
+    .links a {
+      display: block;
+      color: #1a0dab;
+      text-decoration: none;
+      margin: 5px 0;
+    }
+    .links a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <video src="https://0x0.st/s/h7ks6uoobVGd9eTqtY7FtA/8PY-.mp4" autoplay muted loop playsinline style="display: none;"></video>
-        <h1>Werpyock</h1>
-        <p>Python разработчик</p>
-        <div class="links">
-            <a href="https://bit.ly/werpyockgithub" target="_blank">GitHub</a>
-            <a href="https://bit.ly/werpyocktg" target="_blank">Telegram</a>
-            <a href="about.html" target="_blank">Обо мне</a>
+  <div class="container">
+    <div class="pfp">
+      <video autoplay muted loop playsinline>
+        <source src="https://0x0.st/s/h7ks6uoobVGd9eTqtY7FtA/8PY-.mp4" type="video/mp4">
+        Твой бразуер не поддерживает видео😭
+      </video>
     </div>
+    <h1>Werpyock</h1>
+    <p>Python разработчик</p>
+    <div class="links">
+      <a href="https://bit.ly/werpyockgithub" target="_blank">GitHub</a>
+      <a href="https://bit.ly/werpyocktg" target="_blank">Telegram</a>
+      <a href="about.html" target="_blank">Обо мне</a>
+    </div>
+  </div>
 </body>
 </html>
