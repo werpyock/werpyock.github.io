@@ -13,6 +13,7 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
+      transition: background-color 2s;
     }
     .container {
       background-color: #fff;
@@ -22,6 +23,7 @@
       text-align: center;
       max-width: 400px;
       width: 100%;
+      transition: background-color 0s;
     }
     .pfp {
       width: 100px;
@@ -53,7 +55,7 @@
     .links a:hover {
       text-decoration: underline;
     }
-    /* Стили для переключателя темы */
+    
     #theme-toggle {
       position: fixed;
       top: 10px;
@@ -64,8 +66,9 @@
       border-radius: 5px;
       font-size: 14px;
       z-index: 1000;
+      transition: background-color 0s, color 0s;
     }
-    /* Тёмная тема */
+
     body.dark {
       background-color: #222;
       color: #eee;
@@ -79,6 +82,10 @@
     }
     body.dark .links a {
       color: #8ab4f8;
+    }
+    body.dark #theme-toggle {
+      background-color: #444;
+      color: #eee;
     }
   </style>
 </head>
@@ -100,8 +107,46 @@
     </div>
   </div>
   <script>
-    document.getElementById('theme-toggle').addEventListener('click', function(){
-      document.body.classList.toggle('dark');
+    function setCookie(name, value, days) {
+      var expires = "";
+      if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+      }
+      document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    }
+    
+    function getCookie(name) {
+      var nameEQ = name + "=";
+      var ca = document.cookie.split(';');
+      for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+      }
+      return null;
+    }
+    
+    function applyTheme(theme) {
+      if (theme === 'dark') {
+        document.body.classList.add('dark');
+      } else {
+        document.body.classList.remove('dark');
+      }
+    }
+    
+    var currentTheme = getCookie('theme') || 'light';
+    applyTheme(currentTheme);
+    
+    document.getElementById('theme-toggle').addEventListener('click', function() {
+      if (document.body.classList.contains('dark')) {
+        document.body.classList.remove('dark');
+        setCookie('theme', 'light', 30);
+      } else {
+        document.body.classList.add('dark');
+        setCookie('theme', 'dark', 30);
+      }
     });
   </script>
 </body>
