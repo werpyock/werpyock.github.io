@@ -23,12 +23,22 @@
             max-width: 400px;
             width: 100%;
         }
-        .pfp {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 20px;
+        .video-container {
+            position: relative;
+            width: 640px;
+            height: 360px;
+            background-color: black;
+            cursor: pointer;
+        }
+        .video-container video {
+            width: 100%;
+            height: 100%;
+        }
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
         h1 {
             margin: 0;
@@ -51,7 +61,7 @@
 </head>
 <body>
     <div class="container">
-        <img src="https://0x0.st/s/h7ks6uoobVGd9eTqtY7FtA/8PY-.mp4" alt="werpyock" class="pfp">
+        <video src="https://0x0.st/s/h7ks6uoobVGd9eTqtY7FtA/8PY-.mp4" autoplay muted loop playsinline style="display: none;"></video>
         <h1>Werpyock</h1>
         <p>Python разработчик</p>
         <div class="links">
