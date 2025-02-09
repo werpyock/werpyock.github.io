@@ -72,14 +72,14 @@
     </style>
 </head>
 <body>
-    <h4>Werpyock Hikka Modules</h4>
+    <h1>Werpyock Hikka Modules</h1>
     <button class="refresh-button" id="refreshBtn">Обновить</button>
     <div id="content">
         <ul class="file-list" id="fileList"></ul>
     </div>
 
     <script>
-        const API_URL = 'https://api.github.com/repos/werpyock/hikkamods/contents';
+        const API_URL = 'https://api.github.com/repos/werpyock/hikkamods/contents/modules';
         let isLoading = false;
 
         async function loadFiles() {
@@ -94,7 +94,7 @@
                 fileList.innerHTML = '<li style="padding: 20px; color: #6a737d;">Загрузка данных...</li>';
 
                 const response = await fetch(`${API_URL}?t=${Date.now()}`);
-                if (!response.ok) throw new Error(`Ошибка ${response.status}`);
+                if (!response.ok) throw new Error(`Ошибка ${response.status} (${response.statusText})`);
                 
                 const data = await response.json();
                 const pyFiles = data.filter(file => 
@@ -123,9 +123,12 @@
                 });
 
             } catch (error) {
+                console.error('GitHub API Error:', error);
                 fileList.innerHTML = `
                     <div class="error-message">
-                        ${error.message.includes('429') ? 'Слишком много запросов' : 'Ошибка загрузки данных'}
+                        ${error.message.includes('404') ? 'Репозиторий не найден' : 
+                         error.message.includes('403') ? 'Лимит запросов исчерпан' : 
+                         'Ошибка подключения'}
                     </div>
                 `;
             } finally {
