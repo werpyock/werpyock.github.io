@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Werpyock Hikka Modules</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .file-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .file-name {
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .file-name:hover {
+            text-decoration: underline;
+        }
+        .file-date {
+            color: #666;
+        }
+        .refresh-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .refresh-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Werpyock Hikka Modules</h1>
+    <button class="refresh-button" onclick="loadFiles()">Обновить</button>
+    <ul class="file-list" id="fileList"></ul>
+
+    <script>
+        async function loadFiles() {
+            const repoUrl = 'https://api.github.com/repos/werpyock/hikkamods/contents';
+            const fileList = document.getElementById('fileList');
+            fileList.innerHTML = '<li>Загрузка...</li>';
+
+            try {
+                const response = await fetch(repoUrl);
+                const data = await response.json();
+
+                const pyFiles = data
+                    .filter(file => file.name.endsWith('.py'))
+                    .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+
+                fileList.innerHTML = '';
+
+                pyFiles.forEach(file => {
+                    const listItem = document.createElement('li');
+                    listItem.className = 'file-item';
+
+                    const fileName = document.createElement('a');
+                    fileName.className = 'file-name';
+                    fileName.textContent = file.name;
+                    fileName.href = file.download_url;
+                    fileName.target = '_blank';
+
+                    const fileDate = document.createElement('span');
+                    fileDate.className = 'file-date';
+                    fileDate.textContent = new Date(file.updated_at).toLocaleString();
+
+                    listItem.appendChild(fileName);
+                    listItem.appendChild(fileDate);
+                    fileList.appendChild(listItem);
+                });
+            } catch (error) {
+                fileList.innerHTML = '<li>Ошибка загрузки данных</li>';
+                console.error('Ошибка:', error);
+            }
+        }
+
+        window.onload = loadFiles;
+    </script>
+</body>
+</html>
