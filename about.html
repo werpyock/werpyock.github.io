@@ -1,1 +1,124 @@
-nothing here yet..
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Обо мне</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff;
+      color: #333333;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    body.dark {
+      background-color: #222222;
+      color: #f1f1f1;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: #f0f0f0;
+    }
+    body.dark header {
+      background-color: #333333;
+    }
+    .back-button {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      text-decoration: none;
+      background-color: #007BFF;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      z-index: 1000;
+    }
+    .theme-switcher {
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-size: 1rem;
+      padding: 0.5rem;
+    }
+    .content {
+      max-width: 800px;
+      margin: 5rem auto 2rem;
+      padding: 0 1rem;
+    }
+    .info-box {
+      border: 1px solid #ddd;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      background-color: #fafafa;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    body.dark .info-box {
+      border: 1px solid #555;
+      background-color: #444;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+    .info-box h2 {
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="back-button">Вернуться</a>
+  <header>
+    <h1>Обо мне</h1>
+    <button class="theme-switcher" id="themeToggle">Сменить тему</button>
+  </header>
+  <div class="content">
+    <div class="info-box">
+      <h2>Информация</h2>
+      <p>Изучаю python, html, css, js.</p>
+      <p>Делаю ботов на Telegram, discord/модули на хикку.</p>
+    </div>
+    <div class="info-box">
+      <h2>Мои проекты</h2>
+      <p>Тут должны быть мои проекты но я потом их добавлю (через 10 лет).</p>
+    </div>
+    <div class="info-box">
+    </div>
+  </div>
+  <script>
+    function setCookie(name, value, days) {
+      var expires = "";
+      if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + date.toUTCString();
+      }
+      document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+    }
+    function getCookie(name) {
+      var nameEQ = name + "=";
+      var ca = document.cookie.split(';');
+      for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length);
+      }
+      return null;
+    }
+    if(getCookie("theme") === "dark"){
+      document.body.classList.add("dark");
+    }
+    document.getElementById("themeToggle").addEventListener("click", function(){
+      document.body.classList.toggle("dark");
+      if(document.body.classList.contains("dark")){
+        setCookie("theme", "dark", 30);
+      } else {
+        setCookie("theme", "light", 30);
+      }
+    });
+  </script>
+</body>
+</html>
