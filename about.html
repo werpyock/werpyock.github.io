@@ -11,7 +11,7 @@
       padding: 0;
       background-color: #ffffff;
       color: #333333;
-      transition: background-color 0.3s ease, color 0.3s ease;
+      transition: background-color 0.5s ease, color 0.5s ease;
     }
     body.dark {
       background-color: #222222;
@@ -23,7 +23,7 @@
       align-items: center;
       padding: 1rem 2rem;
       background-color: #f0f0f0;
-      transition: background-color 0.3s ease;
+      transition: background-color 0.5s ease;
     }
     body.dark header {
       background-color: #333333;
@@ -38,15 +38,15 @@
       border-radius: 4px;
       font-size: 0.9rem;
       cursor: pointer;
-      transition: background-color 0.3s ease, color 0.3s ease;
+      transition: background-color 0.5s ease, color 0.5s ease;
     }
     .theme-switcher {
-      background-color: #000000;
+      background-color: #4f80ff;
       color: #ffffff;
     }
     body.dark .theme-switcher {
-      background-color: #ffffff;
-      color: #000000;
+      background-color: #000000;
+      color: #ffffff;
     }
     .back-button {
       text-decoration: none;
@@ -66,7 +66,7 @@
       border-radius: 8px;
       background-color: #fafafa;
       box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-      transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      transition: background-color 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
     }
     body.dark .info-box {
       border: 1px solid #555;
@@ -120,20 +120,9 @@
       }
       return null;
     }
-    function updateToggleButtonStyle() {
-      var btn = document.getElementById("themeToggle");
-      if(document.body.classList.contains("dark")){
-        btn.style.backgroundColor = "#ffffff";
-        btn.style.color = "#000000";
-      } else {
-        btn.style.backgroundColor = "#000000";
-        btn.style.color = "#ffffff";
-      }
-    }
     if(getCookie("theme") === "dark"){
       document.body.classList.add("dark");
     }
-    updateToggleButtonStyle();
     document.getElementById("themeToggle").addEventListener("click", function(){
       document.body.classList.toggle("dark");
       if(document.body.classList.contains("dark")){
@@ -141,7 +130,6 @@
       } else {
         setCookie("theme", "light", 30);
       }
-      updateToggleButtonStyle();
     });
   </script>
 </body>
