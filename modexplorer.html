@@ -12,13 +12,16 @@
         }
         h1 {
             font-size: 24px;
-            margin-bottom: 20px;
+            margin: 0;
+            position: absolute;
+            top: 20px;
+            left: 20px;
             color: #333;
         }
         .file-list {
             list-style-type: none;
             padding: 0;
-            margin: 0;
+            margin: 60px 0 0;
         }
         .file-item {
             display: flex;
@@ -26,10 +29,6 @@
             align-items: center;
             padding: 12px;
             border-bottom: 1px solid #eee;
-            transition: background 0.2s;
-        }
-        .file-item:hover {
-            background: #f8f9fa;
         }
         .file-name {
             color: #0366d6;
@@ -57,7 +56,6 @@
             border-radius: 6px;
             cursor: pointer;
             font-weight: 600;
-            transition: background 0.2s;
         }
         .refresh-button:disabled {
             background-color: #7bc796;
@@ -74,7 +72,7 @@
     </style>
 </head>
 <body>
-    <h1>Werpyock Hikka Modules</h1>
+    <h4>Werpyock Hikka Modules</h4>
     <button class="refresh-button" id="refreshBtn">Обновить</button>
     <div id="content">
         <ul class="file-list" id="fileList"></ul>
@@ -99,11 +97,12 @@
                 if (!response.ok) throw new Error(`Ошибка ${response.status}`);
                 
                 const data = await response.json();
-                const pyFiles = data
-                    .filter(file => file.type === 'file' && file.name.endsWith('.py'))
-                    .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+                const pyFiles = data.filter(file => 
+                    file.type === 'file' && 
+                    file.name.toLowerCase().endsWith('.py')
+                );
 
-                fileList.innerHTML = pyFiles.length ? '' : '<li style="padding: 20px; color: #6a737d;">Нет файлов</li>';
+                fileList.innerHTML = pyFiles.length ? '' : '<li style="padding: 20px; color: #6a737d;">Нет .py файлов</li>';
                 
                 pyFiles.forEach(file => {
                     const li = document.createElement('li');
