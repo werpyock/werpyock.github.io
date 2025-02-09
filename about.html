@@ -27,24 +27,30 @@
     body.dark header {
       background-color: #333333;
     }
-    .back-button {
-      position: fixed;
-      top: 1rem;
-      right: 1rem;
-      text-decoration: none;
-      background-color: #007BFF;
-      color: #fff;
+    .button-group {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .theme-switcher, .back-button {
+      border: none;
       padding: 0.5rem 1rem;
       border-radius: 4px;
       font-size: 0.9rem;
-      z-index: 1000;
+      cursor: pointer;
     }
     .theme-switcher {
-      cursor: pointer;
-      border: none;
-      background: none;
-      font-size: 1rem;
-      padding: 0.5rem;
+      background-color: #000000;
+      color: #ffffff;
+    }
+    body.dark .theme-switcher {
+      background-color: #ffffff;
+      color: #000000;
+    }
+    .back-button {
+      text-decoration: none;
+      display: inline-block;
+      background-color: #ff0000;
+      color: #fff;
     }
     .content {
       max-width: 800px;
@@ -70,10 +76,12 @@
   </style>
 </head>
 <body>
-  <a href="index.html" class="back-button">Вернуться</a>
   <header>
     <h1>Обо мне</h1>
-    <button class="theme-switcher" id="themeToggle">Сменить тему</button>
+    <div class="button-group">
+      <button class="theme-switcher" id="themeToggle">Сменить тему</button>
+      <a href="index.html" class="back-button">Вернуться</a>
+    </div>
   </header>
   <div class="content">
     <div class="info-box">
@@ -86,6 +94,8 @@
       <p>Тут должны быть мои проекты но я потом их добавлю (через 10 лет).</p>
     </div>
     <div class="info-box">
+      <h2>Прочее</h2>
+      <p>Тут тоже должны быть ссылки но мне лень их делать</p>
     </div>
   </div>
   <script>
@@ -93,24 +103,34 @@
       var expires = "";
       if (days) {
         var date = new Date();
-        date.setTime(date.getTime() + (days*24*60*60*1000));
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
         expires = "; expires=" + date.toUTCString();
       }
-      document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+      document.cookie = name + "=" + (value || "") + expires + "; path=/";
     }
     function getCookie(name) {
       var nameEQ = name + "=";
       var ca = document.cookie.split(';');
-      for(var i=0;i < ca.length;i++) {
-        var c = ca[i];
-        while (c.charAt(0)==' ') c = c.substring(1);
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length);
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i].trim();
+        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length);
       }
       return null;
+    }
+    function updateToggleButtonStyle() {
+      var btn = document.getElementById("themeToggle");
+      if(document.body.classList.contains("dark")){
+        btn.style.backgroundColor = "#ffffff";
+        btn.style.color = "#000000";
+      } else {
+        btn.style.backgroundColor = "#000000";
+        btn.style.color = "#ffffff";
+      }
     }
     if(getCookie("theme") === "dark"){
       document.body.classList.add("dark");
     }
+    updateToggleButtonStyle();
     document.getElementById("themeToggle").addEventListener("click", function(){
       document.body.classList.toggle("dark");
       if(document.body.classList.contains("dark")){
@@ -118,6 +138,7 @@
       } else {
         setCookie("theme", "light", 30);
       }
+      updateToggleButtonStyle();
     });
   </script>
 </body>
