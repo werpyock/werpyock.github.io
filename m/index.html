@@ -10,9 +10,9 @@
             const r = urlParams.get('r');
             
             if (r) {
-                window.location.href = `https://github.com/werpyock/hikkamods/raw/refs/heads/main/${r}`;
+                window.location.href = `https://github.com/werpyock/hikkamods/raw/refs/heads/main/${r}.py`;
             } else {
-                document.body.innerHTML = "<h1>No arguments for redirect.</h1>";
+                document.body.innerHTML = "<h1>No r arg in link. URL should be https://werpyock.github.io/?r=[file]</h1>";
             }
         }
     </script>
