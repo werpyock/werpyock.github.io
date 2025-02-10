@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>обо мне</title>
+  <title>больше</title>
   <style>
   body {
     font-family: Arial, sans-serif;
@@ -12,6 +12,7 @@
     background-color: #ffffff;
     color: #333333;
     transition: background-color 0.3s ease, color 0.3s ease;
+    overflow: hidden;
   }
   body.dark {
     background-color: #222222;
@@ -66,12 +67,24 @@
     border-radius: 8px;
     background-color: #fafafa;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.5s ease;
+    animation: resizeBox 0.5s ease-in-out;
   }
   body.dark .info-box {
     border: 1px solid #555;
     background-color: #444;
     box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  }
+  @keyframes resizeBox {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+    100% {
+      transform: scale(1);
+    }
   }
   .info-box h2 {
     margin-top: 0;
@@ -94,7 +107,7 @@
 </head>
 <body>
   <header>
-    <h4>Обо мне</h4>
+    <h4>Больше</h4>
     <div class="button-group">
       <button class="theme-switcher" id="themeToggle">Сменить тему</button>
       <a href="https://werpyock.github.io" class="back-button">Вернуться</a>
@@ -115,7 +128,7 @@
     </div>
     <div class="info-box">
       <h2>Прочее</h2>
-      <p>Тут тоже должны быть ссылки но мне лень их делать.</p>
+      <p>💫Сайт делали: werpyock, infvscodr, failogatov</p>
     </div>
   </div>
   <script>
