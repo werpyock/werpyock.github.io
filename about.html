@@ -11,12 +11,14 @@
     padding: 0;
     background-color: #ffffff;
     color: #333333;
-    transition: background-color 0.3s ease, color 0.3s ease;
     height: 100vh;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     overflow: hidden;
     position: relative;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
   body.dark {
     background-color: #222222;
@@ -24,7 +26,7 @@
   }
   header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding: 1rem 2rem;
     background-color: #f0f0f0;
@@ -37,7 +39,10 @@
   }
   .button-group {
     display: flex;
-    gap: 0.5rem;
+    flex-direction: column;
+    gap: 1rem;
+    opacity: 0;
+    animation: fadeInDropdown 0.5s forwards;
   }
   .theme-switcher, .back-button {
     border: none;
@@ -66,10 +71,10 @@
     margin: 0 auto;
     padding: 1rem;
     flex-grow: 1;
-    overflow-y: auto;
     z-index: 1;
     opacity: 1;
     transition: opacity 0.3s ease;
+    text-align: center;
   }
   .info-box {
     border: 1px solid #ddd;
@@ -85,40 +90,30 @@
     background-color: #444;
     box-shadow: 0 2px 4px rgba(0,0,0,0.3);
   }
-  @keyframes resizeBox {
+  @keyframes fadeInDropdown {
     0% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.05);
+      opacity: 0;
+      transform: translateY(-20px);
     }
     100% {
-      transform: scale(1);
+      opacity: 1;
+      transform: translateY(0);
     }
   }
   @media (max-width: 768px) {
     header {
       padding: 1rem;
     }
-    .button-group {
-      flex-direction: row;
-      gap: 1rem;
-    }
     .content {
       margin: 0 1rem;
     }
     .info-box {
       padding: 0.8rem;
-      margin-bottom: 1rem;
     }
   }
-
   @media (max-width: 480px) {
     .info-box {
       padding: 0.6rem;
-    }
-    .button-group {
-      gap: 0.5rem;
     }
   }
 </style>
