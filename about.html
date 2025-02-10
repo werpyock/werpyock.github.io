@@ -12,7 +12,11 @@
     background-color: #ffffff;
     color: #333333;
     transition: background-color 0.3s ease, color 0.3s ease;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
     overflow: hidden;
+    position: relative;
   }
   body.dark {
     background-color: #222222;
@@ -25,6 +29,8 @@
     padding: 1rem 2rem;
     background-color: #f0f0f0;
     transition: background-color 0.3s ease;
+    width: 100%;
+    z-index: 2;
   }
   body.dark header {
     background-color: #333333;
@@ -42,12 +48,12 @@
     transition: background-color 0.3s ease, color 0.3s ease;
   }
   .theme-switcher {
-    background-color: #4f80ff;
-    color: #ffffff;
-  }
-  body.dark .theme-switcher {
     background-color: #000000;
     color: #ffffff;
+  }
+  body.light .theme-switcher {
+    background-color: #ffffff;
+    color: #000000;
   }
   .back-button {
     text-decoration: none;
@@ -57,8 +63,13 @@
   }
   .content {
     max-width: 800px;
-    margin: 5rem auto 2rem;
-    padding: 0 1rem;
+    margin: 0 auto;
+    padding: 1rem;
+    flex-grow: 1;
+    overflow-y: auto;
+    z-index: 1;
+    opacity: 1;
+    transition: opacity 0.3s ease;
   }
   .info-box {
     border: 1px solid #ddd;
@@ -68,7 +79,6 @@
     background-color: #fafafa;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.5s ease;
-    animation: resizeBox 0.5s ease-in-out;
   }
   body.dark .info-box {
     border: 1px solid #555;
@@ -86,22 +96,30 @@
       transform: scale(1);
     }
   }
-  .info-box h2 {
-    margin-top: 0;
+  @media (max-width: 768px) {
+    header {
+      padding: 1rem;
+    }
+    .button-group {
+      flex-direction: row;
+      gap: 1rem;
+    }
+    .content {
+      margin: 0 1rem;
+    }
+    .info-box {
+      padding: 0.8rem;
+      margin-bottom: 1rem;
+    }
   }
-  a {
-    color: #4f80ff;
-    text-decoration: none;
-    transition: color 0.3s ease;
-  }
-  a:hover {
-    color: #1e60b4;
-  }
-  body.dark a {
-    color: #7ab7ff;
-  }
-  body.dark a:hover {
-    color: #5f9bcf;
+
+  @media (max-width: 480px) {
+    .info-box {
+      padding: 0.6rem;
+    }
+    .button-group {
+      gap: 0.5rem;
+    }
   }
 </style>
 </head>
@@ -150,16 +168,25 @@
       }
       return null;
     }
-    if(getCookie("theme") === "dark"){
-      document.body.classList.add("dark");
-    }
-    document.getElementById("themeToggle").addEventListener("click", function(){
+    function toggleTheme() {
       document.body.classList.toggle("dark");
-      if(document.body.classList.contains("dark")){
+      if (document.body.classList.contains("dark")) {
         setCookie("theme", "dark", 30);
       } else {
         setCookie("theme", "light", 30);
       }
+    }
+
+    if (getCookie("theme") === "dark") {
+      document.body.classList.add("dark");
+    }
+
+    document.getElementById("themeToggle").addEventListener("click", function () {
+      document.body.style.transition = "none";
+      setTimeout(() => {
+        toggleTheme();
+        document.body.style.transition = "background-color 0.3s ease, color 0.3s ease";
+      }, 10);
     });
   </script>
 </body>
