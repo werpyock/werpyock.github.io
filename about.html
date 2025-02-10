@@ -14,7 +14,7 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     overflow: hidden;
     position: relative;
@@ -33,6 +33,7 @@
     justify-content: space-between;
     align-items: center;
     z-index: 2;
+    width: 100%;
   }
   h4 {
     margin: 0;
@@ -40,7 +41,6 @@
   .button-group {
     display: flex;
     gap: 1rem;
-    position: relative;
   }
   .theme-switcher, .back-button {
     border: none;
@@ -66,7 +66,7 @@
   }
   .content {
     max-width: 800px;
-    margin: 0 auto;
+    margin-top: 5rem;
     padding: 1rem;
     flex-grow: 1;
     z-index: 1;
