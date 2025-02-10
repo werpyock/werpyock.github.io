@@ -1,26 +1,11 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fast Module</title>
-    <script>
-        window.onload = function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const r = urlParams.get('r');
-            
-            if (r) {
-                const downloadLink = `https://raw.githubusercontent.com/werpyock/hikkamods/main/${r}.py`;
-                const link = document.createElement('a');
-                link.href = downloadLink;
-                link.download = `${r}.py`;
-                link.click();
-            } else {
-                document.body.innerHTML = "<h3>Нету параметра 'r' в ссылке. URL должен быть https://werpyock.github.io/?r=[название_файла_модуля]</h3>";
-            }
-        }
-    </script>
-</head>
-<body>
-</body>
-</html>
+<script>
+    window.onload = function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const r = urlParams.get('r');
+    if (r) {
+    window.location.href = `https://raw.githubusercontent.com/werpyock/hikkamods/main/${r}.dlm`;
+    } else {
+    document.body.innerHTML = "<h1>Отсутствует параметр 'r'. Используйте: ?r=[имя_модуля]</h1>";
+    }
+}
+</script>
