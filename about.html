@@ -25,24 +25,22 @@
     color: #f1f1f1;
   }
   header {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    right: 1rem;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
-    background-color: #f0f0f0;
-    transition: background-color 0.3s ease;
-    width: 100%;
     z-index: 2;
   }
-  body.dark header {
-    background-color: #333333;
+  h4 {
+    margin: 0;
   }
   .button-group {
     display: flex;
-    flex-direction: column;
     gap: 1rem;
-    opacity: 0;
-    animation: fadeInDropdown 0.5s forwards;
+    position: relative;
   }
   .theme-switcher, .back-button {
     border: none;
@@ -122,8 +120,8 @@
   <header>
     <h4>Больше</h4>
     <div class="button-group">
-      <button class="theme-switcher" id="themeToggle">Сменить тему</button>
       <a href="https://werpyock.github.io" class="back-button">Вернуться</a>
+      <button class="theme-switcher" id="themeToggle">Сменить тему</button>
     </div>
   </header>
   <div class="content">
