@@ -2,7 +2,7 @@
 
 loading_animation() {
     local pid=$1
-    local delay=0.5
+    local delay=0.1
     local spinstr='|/-\'
     echo -e "\e[?25l"
     while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
@@ -16,7 +16,7 @@ loading_animation() {
     echo -e "\e[?25h"
 }
 
-(sleep 5) &
+(sleep 10) &
 task_pid=$!
 
 loading_animation $task_pid
