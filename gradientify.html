@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gradientify</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .footer-credit {
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+            margin-top: 15px;
+            padding-top: 12px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 2.2em;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .control-group {
+            background: white;
+            padding: 12px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .control-group h3 {
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 1.1em;
+        }
+
+        .input-group {
+            margin-bottom: 8px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        input[type="text"], input[type="color"], input[type="range"], select {
+            width: 100%;
+            padding: 6px 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        input[type="color"] {
+            height: 40px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        input[type="range"] {
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        input[type="range"]::-webkit-slider-track {
+            height: 8px;
+            background: linear-gradient(90deg, #e0e0e0 0%, #667eea 100%);
+            border-radius: 4px;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        input[type="range"]::-moz-range-track {
+            height: 8px;
+            background: linear-gradient(90deg, #e0e0e0 0%, #667eea 100%);
+            border-radius: 4px;
+            border: none;
+        }
+
+        .color-inputs {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .color-input {
+            flex: 1;
+            min-width: 100px;
+        }
+
+        .add-color-btn, .remove-color-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 11px;
+            margin-top: 8px;
+            transition: background 0.3s ease;
+        }
+
+        .add-color-btn:hover {
+            background: #5a6fd8;
+        }
+
+        .remove-color-btn {
+            background: #e74c3c;
+            margin-left: 5px;
+        }
+
+        .remove-color-btn:hover {
+            background: #c0392b;
+        }
+
+        .preview-section {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            margin-bottom: 15px;
+        }
+
+        .preview-text {
+            font-size: 2.5em;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+            line-height: 1.2;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            max-width: 100%;
+        }
+
+        .output-section {
+            background: white;
+            padding: 12px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .output-code {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            word-break: break-all;
+            overflow-wrap: break-word;
+            max-height: 250px;
+            overflow-y: auto;
+            overflow-x: auto;
+        }
+
+        .copy-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 8px;
+            font-size: 12px;
+            transition: background 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: #218838;
+        }
+
+        .strength-value {
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .preview-text {
+                font-size: 2em;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Gradientify</h1>
+        
+        <div class="controls">
+            <div class="control-group">
+                <h3>Text Input</h3>
+                <div class="input-group">
+                    <label for="textInput">Enter your text:</label>
+                    <input type="text" id="textInput" placeholder="Type your text here..." value="Hello world!">
+                </div>
+            </div>
+
+            <div class="control-group">
+                <h3>Colors</h3>
+                <div id="colorContainer"></div>
+                <button class="add-color-btn" onclick="addColor()">Add Color</button>
+            </div>
+
+            <div class="control-group">
+                <h3>Gradient Settings</h3>
+                <div class="input-group">
+                    <label for="direction">Direction:</label>
+                    <select id="direction">
+                        <option value="to right">Left to Right</option>
+                        <option value="to left">Right to Left</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="strength">Strength: <span class="strength-value" id="strengthValue">100%</span></label>
+                    <input type="range" id="strength" min="0" max="100" value="100">
+                </div>
+            </div>
+        </div>
+
+        <div class="preview-section">
+            <h3>Preview:</h3>
+            <div class="preview-text" id="previewText">Hello world!</div>
+        </div>
+
+        <div class="output-section">
+            <h3>Generated Code:</h3>
+            <div class="output-code" id="outputCode"></div>
+            <button class="copy-btn" onclick="copyCode()">Copy Code</button>
+        </div>
+        
+        <div class="footer-credit">version: 1.0</div>
+        <div class="footer-credit">by werpyock.github.io</div>
+        
+    </div>
+
+    <script>
+        const elements = {
+            textInput: document.getElementById('textInput'),
+            direction: document.getElementById('direction'),
+            strength: document.getElementById('strength'),
+            strengthValue: document.getElementById('strengthValue'),
+            previewText: document.getElementById('previewText'),
+            outputCode: document.getElementById('outputCode'),
+            colorContainer: document.getElementById('colorContainer')
+        };
+
+        let colors = ['#ff0000', '#0000ff'];
+        let cache = { text: '', colors: [], direction: '', strength: 0 };
+
+        const hexToRgb = hex => {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16)
+            } : null;
+        };
+
+        const rgbToHex = (r, g, b) => "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+
+        const interpolateColor = (colorArray, position, strength) => {
+            if (colorArray.length === 1) return colorArray[0];
+            
+            if (colorArray.length === 2) {
+                const [c1, c2] = colorArray.map(hexToRgb);
+                const r = Math.round(c1.r + (c2.r - c1.r) * position * strength);
+                const g = Math.round(c1.g + (c2.g - c1.g) * position * strength);
+                const b = Math.round(c1.b + (c2.b - c1.b) * position * strength);
+                return rgbToHex(r, g, b);
+            }
+
+            const segmentSize = 1 / (colorArray.length - 1);
+            const segmentIndex = Math.min(Math.floor(position / segmentSize), colorArray.length - 2);
+            const segmentPosition = (position % segmentSize) / segmentSize;
+            
+            const [c1, c2] = [colorArray[segmentIndex], colorArray[segmentIndex + 1]].map(hexToRgb);
+            const r = Math.round(c1.r + (c2.r - c1.r) * segmentPosition * strength);
+            const g = Math.round(c1.g + (c2.g - c1.g) * segmentPosition * strength);
+            const b = Math.round(c1.b + (c2.b - c1.b) * segmentPosition * strength);
+            
+            return rgbToHex(r, g, b);
+        };
+
+        const updateGradient = () => {
+            const text = elements.textInput.value || 'Hello world!';
+            const direction = elements.direction.value;
+            const strength = +elements.strength.value;
+            
+            if (text === cache.text && 
+                JSON.stringify(colors) === JSON.stringify(cache.colors) && 
+                direction === cache.direction && 
+                strength === cache.strength) return;
+            
+            Object.assign(cache, { text, colors: [...colors], direction, strength });
+            
+            if (colors.length >= 2) {
+                const colorStops = colors.map((color, i) => 
+                    `${color} ${(i / (colors.length - 1)) * 100}%`
+                ).join(', ');
+                
+                const gradientCSS = `background: linear-gradient(${direction === 'to left' ? '270deg' : '90deg'}, ${colorStops});
+                                   -webkit-background-clip: text;
+                                   -webkit-text-fill-color: transparent;
+                                   background-clip: text;
+                                   opacity: ${strength / 100};`;
+                
+                elements.previewText.style.cssText = gradientCSS;
+            }
+            
+            elements.previewText.textContent = text;
+            generateOutput(text, direction, strength);
+        };
+
+        const generateOutput = (text, direction, strength) => {
+            const chars = text.split('');
+            const nonSpaceChars = chars.filter(char => char !== ' ');
+            let coloredCharIndex = 0;
+            
+            const result = chars.map(char => {
+                if (char === ' ') return ' ';
+                
+                const position = nonSpaceChars.length > 1 ? 
+                    coloredCharIndex / (nonSpaceChars.length - 1) : 0;
+                coloredCharIndex++;
+                
+                const actualPosition = direction === 'to left' ? 1 - position : position;
+                const color = interpolateColor(colors, actualPosition, strength / 100);
+                
+                return `<color=${color}>${char}</color>`;
+            }).join('');
+            
+            elements.outputCode.textContent = result;
+        };
+
+        const addColor = () => {
+            if (colors.length >= 10) {
+                alert('Maximum 10 colors allowed');
+                return;
+            }
+            colors.push('#ffffff');
+            updateColorInputs();
+            updateGradient();
+        };
+
+        const removeColor = index => {
+            if (colors.length <= 2) {
+                alert('Minimum 2 colors required');
+                return;
+            }
+            colors.splice(index, 1);
+            updateColorInputs();
+            updateGradient();
+        };
+
+        const updateColorInputs = () => {
+            const colorInputsDiv = document.createElement('div');
+            colorInputsDiv.className = 'color-inputs';
+            
+            colors.forEach((color, index) => {
+                const colorInputDiv = document.createElement('div');
+                colorInputDiv.className = 'color-input';
+                
+                const label = document.createElement('label');
+                label.textContent = `Color ${index + 1}:`;
+                
+                const input = document.createElement('input');
+                input.type = 'color';
+                input.className = 'color-picker';
+                input.value = color;
+                input.addEventListener('input', e => {
+                    colors[index] = e.target.value;
+                    updateGradient();
+                });
+                
+                colorInputDiv.append(label, input);
+                
+                if (colors.length > 2) {
+                    const removeBtn = document.createElement('button');
+                    removeBtn.className = 'remove-color-btn';
+                    removeBtn.textContent = 'Remove';
+                    removeBtn.onclick = () => removeColor(index);
+                    colorInputDiv.appendChild(removeBtn);
+                }
+                
+                colorInputsDiv.appendChild(colorInputDiv);
+            });
+            
+            elements.colorContainer.innerHTML = '';
+            elements.colorContainer.appendChild(colorInputsDiv);
+        };
+
+        const copyCode = async () => {
+            try {
+                await navigator.clipboard.writeText(elements.outputCode.textContent);
+            } catch {
+                const textArea = document.createElement('textarea');
+                textArea.value = elements.outputCode.textContent;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+            }
+            
+            const copyBtn = document.querySelector('.copy-btn');
+            const originalText = copyBtn.textContent;
+            copyBtn.textContent = 'Copied!';
+            copyBtn.style.background = '#17a2b8';
+            
+            setTimeout(() => {
+                copyBtn.textContent = originalText;
+                copyBtn.style.background = '#28a745';
+            }, 2000);
+        };
+
+        elements.textInput.addEventListener('input', updateGradient);
+        elements.direction.addEventListener('change', updateGradient);
+        elements.strength.addEventListener('input', function() {
+            elements.strengthValue.textContent = this.value + '%';
+            updateGradient();
+        });
+
+        updateColorInputs();
+        updateGradient();
+    </script>
+</body>
+</html>
